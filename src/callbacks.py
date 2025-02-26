@@ -16,9 +16,10 @@ async def callback_handler(update, context):
 		song_full_title= "**" + lyrics_string_container["full_title"] + "**"
 		final_string= song_full_title + "\n\n" + lyrics_string + "\n\nSupport us by sharing the bot!"
 		list_of_4096_characters=parser_4096(final_string)
-		await update.callback_query.delete_message()
 		for block in list_of_4096_characters:
 			await update.callback_query.message.reply_text(block)
+		if update.callback_query.message:
+			await update.callback_query.delete_message()
 	else:
 		await update.callback_query.edit_message_text("No lyrics data available.")
 		await update.callback_query.edit_message_reply_markup(InlineKeyboardMarkup([[]]))
